@@ -20,10 +20,12 @@ import (
 	"github.com/jfrog/jfrog-cli/distribution"
 	"github.com/jfrog/jfrog-cli/docs/common"
 	aiDocs "github.com/jfrog/jfrog-cli/docs/general/ai"
+	historyDocs "github.com/jfrog/jfrog-cli/docs/general/history"
 	loginDocs "github.com/jfrog/jfrog-cli/docs/general/login"
 	summaryDocs "github.com/jfrog/jfrog-cli/docs/general/summary"
 	tokenDocs "github.com/jfrog/jfrog-cli/docs/general/token"
 	"github.com/jfrog/jfrog-cli/general/ai"
+	"github.com/jfrog/jfrog-cli/general/history"
 	"github.com/jfrog/jfrog-cli/general/login"
 	"github.com/jfrog/jfrog-cli/general/summary"
 	"github.com/jfrog/jfrog-cli/general/token"
@@ -279,6 +281,38 @@ func getCommands() ([]cli.Command, error) {
 			HelpName:     corecommon.CreateUsage("how", aiDocs.GetDescription(), aiDocs.Usage),
 			BashComplete: corecommon.CreateBashCompletionFunc(),
 			Action:       ai.HowCmd,
+		},
+		{
+			Name:         "history",
+			Usage:        historyDocs.GetDescription(),
+			HelpName:     corecommon.CreateUsage("history", historyDocs.GetDescription(), historyDocs.Usage),
+			UsageText:    historyDocs.GetArguments(),
+			BashComplete: corecommon.CreateBashCompletionFunc(),
+			Category:     otherCategory,
+			Flags: []cli.Flag{
+				cli.IntFlag{
+					Name:  "limit",
+					Usage: "Maximum number of history entries to display",
+					Value: 50,
+				},
+				cli.BoolFlag{
+					Name:  "failed",
+					Usage: "Show only failed commands",
+				},
+				cli.BoolFlag{
+					Name:  "success",
+					Usage: "Show only successful commands",
+				},
+				cli.BoolFlag{
+					Name:  "stats",
+					Usage: "Show statistics about most used commands",
+				},
+				cli.BoolFlag{
+					Name:  "clear",
+					Usage: "Clear all command history",
+				},
+			},
+			Action: history.HistoryCmd,
 		},
 		{
 			Name:         "access-token-create",

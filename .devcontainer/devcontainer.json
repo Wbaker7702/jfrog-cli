@@ -1,0 +1,34 @@
+{
+	"name": "JFrog CLI Development",
+	"image": "golang:1.23",
+	
+	"features": {
+		"ghcr.io/devcontainers/features/git:1": {},
+		"ghcr.io/devcontainers/features/github-cli:1": {}
+	},
+
+	"customizations": {
+		"vscode": {
+			"extensions": [
+				"golang.go",
+				"eamodio.gitlens",
+				"ms-vscode.makefile-tools",
+				"streetsidesoftware.code-spell-checker"
+			],
+			"settings": {
+				"go.formatTool": "goimports",
+				"go.lintTool": "staticcheck",
+				"go.lintOnSave": "package",
+				"go.testFlags": ["-v"],
+				"editor.formatOnSave": true,
+				"editor.codeActionsOnSave": {
+					"source.organizeImports": "explicit"
+				}
+			}
+		}
+	},
+
+	"postCreateCommand": "go mod download && go install honnef.co/go/tools/cmd/staticcheck@latest",
+	
+	"remoteUser": "root"
+}
